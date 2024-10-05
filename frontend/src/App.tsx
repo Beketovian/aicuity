@@ -1,26 +1,34 @@
+import { useState } from "react"
+import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
+
 export default function App() {
+
+    const [content, setContent] = useState("initial")
 
   return (
     <>
-        <nav className="navbar">
-            <div className="logo">
-
-                <a href="/">aicuity</a>
+       <Navbar />
+        <div className="content-wrapper">
+            <div className={`${(content === "initial") ? "initial-content" : "hide"}`} onAnimationEnd={() => setContent("main")}>
+                <img className="initial-content-img" src="/initial_img3.svg"/>
             </div>
-            <div className="links">
-                <a href="/">home</a>
-                <a href="/about">about</a>
-            </div>
-        </nav>
-        <div>
-            <div className="initial-content"></div>
-            <div className="main-content">
-                
+            <div className={`${(content === "main") ? "main-content" : "hide"}`}>
+                <h1 className="main-content-header">
+                    a fast, simple, and easy way to 
+                    <br/> personalize study playlists
+                </h1>
+                <div className="main-content-cta">
+                    <input
+                        className="main-content-input"
+                        type="text"
+                        placeholder="list all the topics you want to study"
+                    />
+                    <button className="main-content-btn">search</button>
+                </div>
             </div>
         </div>
-        <footer className="footer">
-            made with &lt;3 by the Aicuity team
-        </footer>
+        <Footer />
     </>
   )
 }

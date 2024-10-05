@@ -1,0 +1,38 @@
+.navbar {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 16px;
+    font-size: 20px;
+}
+
+.logo > a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    column-gap: 16px;
+}
+
+.inactive, .active {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.inactive {
+    text-decoration: none;
+}
+
+.active {
+    text-decoration: underline;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 4px;
+}
