@@ -25,8 +25,3 @@ def get_top_videos(query, max_results=15):
         videos.append(video_id)
 
     return videos
-
-if __name__ == "__main__":
-    search_query = "shashank"
-    top_videos = get_top_videos(search_query)
-    print(top_videos)
