@@ -32,17 +32,27 @@ export default function CardCarousel({playlists, prompt, setShowPopup}: CardCaro
             body: JSON.stringify(body)
         })
         const data = await response.json()
-        setPlaylistCards((prev) => [...prev, (
-            <VideoCard
-                key={videoId}
-                videoId={videoId}
-                video={{link: `https://www.youtube.com/watch?v=${videoId}`, title: data.title, rating: videoData[0]+1}}
-                setShowPopup={setShowPopup}
-                videoData={videoData}
-            />
-        )]);
+        // console.log(videoData);
+        setPlaylistCards((prevPlaylistCards) => {
+            // Create a copy of the previous state
+            const updatedStuff = [...prevPlaylistCards];
+    
+            // Update the specific index with the new VideoCard component
+            updatedStuff[videoData[0]] = (
+                <VideoCard
+                    key={videoId}
+                    videoId={videoId}
+                    video={{ link: `https://www.youtube.com/watch?v=${videoId}`, title: data.title, rating: videoData[0] + 1 }}
+                    setShowPopup={setShowPopup}
+                    videoData={videoData}
+                />
+            );
+    
+            // Return the updated array, which will become the new state
+            return updatedStuff;
+        });
     })
-    }
+}
     fetchData();
 
     }, [])

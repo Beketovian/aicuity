@@ -18,22 +18,21 @@ export default function Popup({video, highlights, links, setShowPopup, videoId} 
                         onClick={() => {setShowPopup(null)}}
                     />
                 </div>
-                <div className="w-40 aspect-video rounded-md bg-gray-300">
+                {/* <div className="w-160 aspect-video rounded-md bg-gray-300">
                 <iframe
-                    width="160" // Width of the iframe
-                    height="90" // Height of the iframe
+                    width="100%" // Width of the iframe
                     src={"https://www.youtube.com/embed/"+videoId} // The YouTube video URL (replace with your URL)
                     title="YouTube video player" // Title for accessibility
                     frameBorder="0" // No border
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" // Permissions
                     allowFullScreen // Allow fullscreen mode
                 ></iframe>
-                </div>
+                </div> */}
                 <ul className="w-full list-disc pl-5 ">
                     {highlights.map((highlight, index) => (
                         <li key={index}>
                             <a className="flex gap-x-2 items-center text-sm underline" href={links[index]}>
-                                {highlight}
+                                "...{highlight}..."
                                 <FaExternalLinkAlt className="text-xs" />
                             </a>
                         </li>
