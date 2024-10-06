@@ -44,7 +44,7 @@ def do_text_sim(query, input_dict):
                 if word.lower() in tokenizer_model and word.lower() not in common_words:
                     word_embeddings.append(tokenizer_model[word.lower()])
                 if word.lower() in search_term and word.lower() not in common_words:
-                    relevant_times[i].append(input_dict[i][j]["start"])
+                    relevant_times[i].append(input_dict[i][j])
                 
         if len(word_embeddings) == 0:
             scores.append(0); continue
