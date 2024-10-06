@@ -8,7 +8,7 @@ interface CardCarouselProps {
 
 export default function CardCarousel({playlists}: CardCarouselProps) {
     return (
-        <div className="w-full max-h-[90%] mt-[65px] loading-animation flex flex-col gap-y-8 overflow-y-auto">
+        <div className="w-full max-h-[90%] mt-[65px] loading-animation flex flex-col gap-y-8 overflow-y-auto pr-4">
             {playlists.map((playlist: PlaylistData, index) => {
                 return (
                     <PlaylistCard
@@ -25,7 +25,7 @@ export default function CardCarousel({playlists}: CardCarouselProps) {
 function PlaylistCard({topic, videos}: PlaylistData) {
     return (
         <div className="w-full">
-            <h1 className="text-2xl font-bold border-b-4 border-solid border-gray-300 mb-2">{topic}</h1>
+            <h1 className="text-2xl font-bold border-b-[3px] border-solid border-gray-300 mb-2">{topic}</h1>
             <div className="w-full flex flex-col gap-y-4">
                 <div className="w-full grid grid-cols-playlist px-4 bg-gray-200 text-gray-600 font-bold rounded-lg py-2 text-sm">
                     <p>Video Title</p>

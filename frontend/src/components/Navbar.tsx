@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
         <nav className="w-full h-12 flex justify-between items-center gap-x-4 text-xl">
             <a 
-                className="cursor-pointer" 
+                className="cursor-pointer border-4 rounded-md border-solid border-black brutalist" 
                 href="/"
             >
                 <img
