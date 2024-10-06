@@ -18,6 +18,23 @@ def search_and_analyze_videos():
 
         static_detection_results = analyze_static(top_videos)
 
+        """
+        his is a placeholder return for now. Output example:
+        "static_analysis": {
+            "5WpUfmhGAt4.wav": 0,
+            "6XQB7y_FaVw.wav": 1,
+            "8mZOKUNEYHc.wav": 0,
+            "EX52BuZxpQM.wav": 0,
+            "FdutLmvwPWk.wav": 0,
+            "LORrwdqxtmg.wav": 0,
+            "Rg8hC-Xx7RM.wav": 1,
+            "ZZvbhY4I0Dw.wav": 1,
+            "kYkiDan8Cnk.wav": 1,
+            "p4FQyOwjhLA.wav": 0
+        }
+        
+        We want to feed this into The Algorithm for ranking
+        """
         return jsonify({
             "static_analysis": static_detection_results
         }), 200
