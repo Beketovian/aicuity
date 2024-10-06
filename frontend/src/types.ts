@@ -8,3 +8,9 @@ export interface VideoData {
     title: string;
     rating: number;
 }
+
+export interface PopupData {
+    video: string;
+    highlights: string[];
+    links: string[];
+}
