@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify
 from yt_vid_list import get_top_videos
 from mic_quality_analyzer import analyze_static
+from yt_transcript import get_yt_transcript
+from text_sim import do_text_sim
+from matching_algo import perform_matching
+import random
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -19,6 +23,17 @@ def search_and_analyze_videos():
         top_videos = get_top_videos(search_query)
 
         static_detection_results = analyze_static(top_videos)
+        transcripts = []
+        for id in top_videos:
+            transcripts.append(get_yt_transcript(id))
+        scores, relevant_times = do_text_sim(search_query, transcripts)
+
+        # list with (id, text score, static score)
+        #print(static_detection_results)
+        #print(relevant_times)
+        ids_and_scores = [(top_videos[i], scores[i], static_detection_results[top_videos[i]], relevant_times[i]) for i in range(len(top_videos))]
+
+        rankings = perform_matching(ids_and_scores)
 
         """
         his is a placeholder return for now. Output example:
@@ -38,7 +53,7 @@ def search_and_analyze_videos():
         We want to feed this into The Algorithm for ranking
         """
         return jsonify({
-            "static_analysis": static_detection_results
+            "ranking": rankings
         }), 200
 
     except Exception as e:

@@ -82,6 +82,8 @@ def analyze_audio_files_in_parallel(directory):
             file_path, result = future.result()
             file_name = os.path.basename(file_path)
             results[file_name] = result
+            
+    results = {file_name.replace('.wav', ''): result for file_name, result in results.items()}
 
     return results
 
