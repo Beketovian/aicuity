@@ -51,5 +51,6 @@ def do_text_sim(query, input_dict):
         avg_embed = np.mean(word_embeddings, axis=0)
         scores.append(cosine_similarity(avg_search_embed, avg_embed))
     
+    
     return softmax(scores).tolist(), relevant_times
 
