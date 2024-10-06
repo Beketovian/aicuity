@@ -8,7 +8,7 @@ API_KEY = os.getenv("YOUTUBE_API_KEY")
 API_SERVICE_NAME = "youtube"
 API_VERSION = "v3"
 
-def get_top_videos(query, max_results=15):
+def get_top_videos(query, max_results=10):
     youtube = build(API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
 
     search_response = youtube.search().list(
