@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from yt_vid_list import get_top_videos
-from mic_quality_analyzer import analyze_static
+from mic_quality_analyzer import analyze_static, get_video_title
 from yt_transcript import get_yt_transcript
 from text_sim import do_text_sim
 from matching_algo import perform_matching
@@ -9,6 +9,20 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+
+@app.route('/get_title', methods=['POST'])
+def get_title():
+    data = request.get_json()
+    video_id = data.get('video_id', '')
+    
+    if not video_id:
+        return jsonify({"error": "No video id provided"}), 400
+    
+    try:
+        title = get_video_title("https://www.youtube.com/watch?v=" + video_id)
+        return jsonify({"title": title}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Combined route for searching videos and analyzing static noise
 @app.route('/search_and_analyze', methods=['POST'])

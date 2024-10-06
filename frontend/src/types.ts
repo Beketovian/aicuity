@@ -14,3 +14,13 @@ export interface PopupData {
     highlights: string[];
     links: string[];
 }
+
+export interface Subtitle {
+    duration: number;
+    start: number;
+    text: string;
+}
+
+export interface Ranking {
+    [videoId: string]: [number, Subtitle[]];
+}

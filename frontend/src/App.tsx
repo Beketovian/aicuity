@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import { PlaylistData, PopupData } from "./types"
+import { PlaylistData, PopupData, Ranking } from "./types"
 import CardCarousel from "./components/CardCarousel";
 import Loading from "./components/Loading";
 import Popup from "./components/Popup";
@@ -9,7 +9,7 @@ import Popup from "./components/Popup";
 
 export default function App() {
 
-    const [playlists, setPlaylists] = useState<PlaylistData[]>([])
+    const [playlists, setPlaylists] = useState<Ranking | null>(null)
 
     const [stage1, setStage1] = useState<string>("show");
     const [stage2, setStage2] = useState<string>("hide");
@@ -17,6 +17,7 @@ export default function App() {
     const [stage3, setStage3] = useState<string>("hide");
 
     const [showPopup, setShowPopup] = useState<PopupData | null>(null);
+    const [prompt , setPrompt] = useState<string>("");
 
     function transitionStage1() {
         // end stage 1
@@ -38,31 +39,21 @@ export default function App() {
         transitionStage2();
         // get all topics
         const topics = e.target[0].value;
+        setPrompt(topics);
         const body = {
             query: topics
         }
         // make a request to the backend
-        // const response = await fetch("http://localhost:5000/search_and_analyze", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(body)
-        // })
-        // const data = await response.json()
-        // console.log(data);
-        setPlaylists([
-            {
-                topic: "your mom",
-                videos: [
-                    {
-                        link: "/omg",
-                        title: "why moms are the best parents",
-                        rating: 5
-                    }
-                ]
-            }
-        ])
+        const response = await fetch("http://localhost:5000/search_and_analyze", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+        const data = await response.json()
+        console.log("backend data: ",data);
+        setPlaylists(data);
     }
 
     return (
@@ -78,7 +69,7 @@ export default function App() {
 
                 <div className={`playlist-content ${stage3}`}>
                     {/* {(playlists.length <= 0) ? <Loading/> : <Loading/>} */}
-                    {(playlists.length <= 0) ? <Loading/> : <CardCarousel playlists={playlists} setShowPopup={setShowPopup}/>}
+                    {(playlists === null) ? <Loading/> : <CardCarousel prompt={prompt} playlists={playlists} setShowPopup={setShowPopup}/>}
                 </div>
 
                 <div className={`w-full flex flex-col gap-y-8 items-center justify-center absolute left-1/2 ${(stage3 === "show") ? "cta-ani" : "cta-non"}`}>
