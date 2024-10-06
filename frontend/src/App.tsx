@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import { PlaylistData } from "./types"
+import { PlaylistData, PopupData } from "./types"
 import CardCarousel from "./components/CardCarousel";
 import Loading from "./components/Loading";
+import Popup from "./components/Popup";
 
 
 export default function App() {
@@ -14,6 +15,8 @@ export default function App() {
     const [stage2, setStage2] = useState<string>("hide");
     const [stage2b, setStage2b] = useState<string>("hide");
     const [stage3, setStage3] = useState<string>("hide");
+
+    const [showPopup, setShowPopup] = useState<PopupData | null>(null);
 
     function transitionStage1() {
         // end stage 1
@@ -39,77 +42,25 @@ export default function App() {
             query: topics
         }
         // make a request to the backend
-        const response = await fetch("http://localhost:5000/search_and_analyze", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        })
-        const data = await response.json()
-        console.log(data);
-        if (e.target[0].value === "test") {
-            setPlaylists([
-                {
-                    topic: "random",
-                    videos: [
-                        {
-                            link: "test",
-                            title: "test",
-                            rating: 5
-                        }
-                    ]
-                },
-            ]);
-            return;
-        }
+        // const response = await fetch("http://localhost:5000/search_and_analyze", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(body)
+        // })
+        // const data = await response.json()
+        // console.log(data);
         setPlaylists([
             {
-                topic: "test",
+                topic: "your mom",
                 videos: [
                     {
-                        link: "test",
-                        title: "test",
-                        rating: 5
-                    },
-                    {
-                        link: "test",
-                        title: "test",
-                        rating: 5
-                    },
-                    {
-                        link: "test",
-                        title: "test",
+                        link: "/omg",
+                        title: "why moms are the best parents",
                         rating: 5
                     }
                 ]
-            },
-            {
-                topic: "test",
-                videos: [
-                    {
-                        link: "test",
-                        title: "test",
-                        rating: 5
-                    },
-                    {
-                        link: "test",
-                        title: "test",
-                        rating: 5
-                    },
-                    {
-                        link: "test",
-                        title: "test",
-                        rating: 5
-                    }
-                ]
-            }, 
-            {
-                topic: "dogs",
-                videos: []
-            }, {
-                topic: "cats",
-                videos: []
             }
         ])
     }
@@ -127,7 +78,7 @@ export default function App() {
 
                 <div className={`playlist-content ${stage3}`}>
                     {/* {(playlists.length <= 0) ? <Loading/> : <Loading/>} */}
-                    {(playlists.length <= 0) ? <Loading/> : <CardCarousel playlists={playlists}/>}
+                    {(playlists.length <= 0) ? <Loading/> : <CardCarousel playlists={playlists} setShowPopup={setShowPopup}/>}
                 </div>
 
                 <div className={`w-full flex flex-col gap-y-8 items-center justify-center absolute left-1/2 ${(stage3 === "show") ? "cta-ani" : "cta-non"}`}>
@@ -163,6 +114,7 @@ export default function App() {
                 />
             </div>
         </div>
+        {(showPopup == null) ? <></> : <Popup video={showPopup.video} highlights={showPopup.highlights} links={showPopup.links} setShowPopup={setShowPopup}/>}
         <Footer />
         </>
     )

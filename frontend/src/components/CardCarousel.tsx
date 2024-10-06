@@ -4,9 +4,10 @@ import { FaGlasses, FaPlay } from "react-icons/fa";
 
 interface CardCarouselProps {
     playlists: PlaylistData[];
+    setShowPopup: any;
 }
 
-export default function CardCarousel({playlists}: CardCarouselProps) {
+export default function CardCarousel({playlists, setShowPopup}: CardCarouselProps) {
     return (
         <div className="w-full max-h-[90%] mt-[65px] loading-animation flex flex-col gap-y-8 overflow-y-auto pr-4">
             {playlists.map((playlist: PlaylistData, index) => {
@@ -15,6 +16,7 @@ export default function CardCarousel({playlists}: CardCarouselProps) {
                         key={index}
                         topic={playlist.topic}
                         videos={playlist.videos}
+                        setShowPopup={setShowPopup}
                     />
                 )
             })}
@@ -22,7 +24,13 @@ export default function CardCarousel({playlists}: CardCarouselProps) {
     )
 }
 
-function PlaylistCard({topic, videos}: PlaylistData) {
+interface PlaylistCardProps {
+    topic: string;
+    videos: VideoData[];
+    setShowPopup: any;
+}
+
+function PlaylistCard({topic, videos, setShowPopup}: PlaylistCardProps) {
     return (
         <div className="w-full">
             <h1 className="text-2xl font-bold border-b-[3px] border-solid border-gray-300 mb-2">{topic}</h1>
@@ -37,6 +45,7 @@ function PlaylistCard({topic, videos}: PlaylistData) {
                         <VideoCard
                             key={index}
                             video={video}
+                            setShowPopup={setShowPopup}
                         />
                     )
                 })}
@@ -45,10 +54,24 @@ function PlaylistCard({topic, videos}: PlaylistData) {
     )
 }
 
-function VideoCard({video}: {video: VideoData}) {
+interface VideoCardProps {
+    video: VideoData;
+    setShowPopup: any;
+}
+
+function VideoCard({video, setShowPopup}: VideoCardProps) {
+    
+    function showStuff() {
+        setShowPopup({
+            video: video.link,
+            highlights: ["highlight1", "highlight2"],
+            links: ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/watch?v=dQw4w9W](gXcQ"]
+        })
+    }
+    
     return (
-        <div className="w-full grid grid-cols-playlist px-4">
-            <h2 className="text-base font-normal">{video.title}</h2>
+        <button type="button" onClick={showStuff} className="w-full grid grid-cols-playlist px-4">
+            <h2 className="w-full flex text-start justify-start text-base font-normal">{video.title}</h2>
             <div className="flex items-center gap-x-2 text-base font-bold">
                 <p>{video.rating} / 10</p>
                 <FaGlasses />
@@ -56,6 +79,6 @@ function VideoCard({video}: {video: VideoData}) {
             <a href={video.link} className="text-base justify-self-center">
                 <FaPlay/>
             </a>
-        </div>
+        </button>
     )
 }
