@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { PlaylistData } from "./types"
@@ -46,6 +46,21 @@ export default function App() {
         //     body: JSON.stringify(body)
         // })
         // const data = await response.json()
+        if (e.target[0].value === "test") {
+            setPlaylists([
+                {
+                    topic: "random",
+                    videos: [
+                        {
+                            link: "test",
+                            title: "test",
+                            rating: 5
+                        }
+                    ]
+                },
+            ]);
+            return;
+        }
         setPlaylists([
             {
                 topic: "test",
@@ -86,7 +101,8 @@ export default function App() {
                         rating: 5
                     }
                 ]
-            }, {
+            }, 
+            {
                 topic: "dogs",
                 videos: []
             }, {
@@ -102,24 +118,29 @@ export default function App() {
         <Navbar />
         <div className="w-full h-full relative">
 
-            <div className={`initial-content ${stage1}`} onAnimationEnd={transitionStage1}>
+            <div className={`initial-content ${stage1} border-4 border-solid border-black`} onAnimationEnd={transitionStage1}>
                 <img className="initial-content-img" src="/initial_img3.svg"/>
             </div>
 
             <div className={`${stage2b} ${(stage3 === "show") ? "justify-start" : "justify-center"} w-full h-full relative`}>
+
+                <div className={`playlist-content ${stage3}`}>
+                    {/* {(playlists.length <= 0) ? <Loading/> : <Loading/>} */}
+                    {(playlists.length <= 0) ? <Loading/> : <CardCarousel playlists={playlists}/>}
+                </div>
 
                 <div className={`w-full flex flex-col gap-y-8 items-center justify-center absolute left-1/2 ${(stage3 === "show") ? "cta-ani" : "cta-non"}`}>
                     <h1 className={`main-content-header font-bold text-4xl ${stage2}`}>
                         a fast, simple, and easy way to 
                         <br/> personalize study playlists
                     </h1>
-                    <form onSubmit={handleSubmit} className={`w-full main-content-cta ${stage2b}`}>
+                    <form onSubmit={handleSubmit} className={`w-full main-content-cta ${stage2b} z-4 items-center`}>
                         <input
-                            className={`${(stage3 === "show") ? "w-full" : "w-80"} main-content-input text-base transition-all duration-1000 delay-250`}
+                            className={`${(stage3 === "show") ? "w-full" : "w-80"} main-content-input text-base transition-all duration-1000 delay-250 border-[3px] border-black border-solid`}
                             type="text"
                             placeholder="list all the topics you want to study"
                         />
-                        <button className="px-4 py-3 border-none bg-[#E4B1F0] rounded-md text-base font-bold main-content-btn z-3">search</button>
+                        <button className="px-4 py-3 border-none bg-[#E4B1F0] rounded-md text-base font-bold main-content-btn z-3 brutalist">search</button>
                     </form>
                 </div>
 
@@ -139,11 +160,6 @@ export default function App() {
                     className={`w-2/6 max-w-80 wiggle absolute bottom-0 right-0 ${stage2}`}
                     src="/element4.png"
                 />
-
-                <div className={`playlist-content ${stage3}`}>
-                    {/* {(playlists.length <= 0) ? <Loading/> : <Loading/>} */}
-                    {(playlists.length <= 0) ? <Loading/> : <CardCarousel playlists={playlists}/>}
-                </div>
             </div>
         </div>
         <Footer />
