@@ -32,20 +32,22 @@ export default function App() {
 
     async function handleSubmit(e: any) {
         e.preventDefault()
+        transitionStage2();
         // get all topics
         const topics = e.target[0].value.split(",");
         const body = {
-            topics: topics
+            query: topics
         }
         // make a request to the backend
-        // const response = await fetch("http://localhost:5000/api/playlist", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(body)
-        // })
-        // const data = await response.json()
+        const response = await fetch("http://localhost:5000/search_and_analyze", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+        const data = await response.json()
+        console.log(data);
         if (e.target[0].value === "test") {
             setPlaylists([
                 {
@@ -110,7 +112,6 @@ export default function App() {
                 videos: []
             }
         ])
-        transitionStage2();
     }
 
     return (

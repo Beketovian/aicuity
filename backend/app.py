@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 from yt_vid_list import get_top_videos
 from mic_quality_analyzer import analyze_static
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Combined route for searching videos and analyzing static noise
 @app.route('/search_and_analyze', methods=['POST'])
