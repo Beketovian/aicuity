@@ -107,5 +107,6 @@ def analyze_static(video_ids):
     process_videos_parallel(video_ids, output_dir)
     print(output_dir)
     results = analyze_audio_files_in_parallel(output_dir)
+    os.system('rm -rf audio/')
     print(results)
     return results
