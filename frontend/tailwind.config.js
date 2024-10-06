@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'playlist': '1fr 200px 80px'
+      }
+    },
   },
   plugins: [],
 }

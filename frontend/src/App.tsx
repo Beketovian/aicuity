@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { PlaylistData } from "./types"
 import CardCarousel from "./components/CardCarousel";
+import Loading from "./components/Loading";
 
 
 export default function App() {
@@ -118,7 +119,7 @@ export default function App() {
                             type="text"
                             placeholder="list all the topics you want to study"
                         />
-                        <button className="px-4 py-3 border-none bg-[#E4B1F0] rounded-md text-base font-bold main-content-btn">search</button>
+                        <button className="px-4 py-3 border-none bg-[#E4B1F0] rounded-md text-base font-bold main-content-btn z-3">search</button>
                     </form>
                 </div>
 
@@ -139,9 +140,10 @@ export default function App() {
                     src="/element4.png"
                 />
 
-                {/* <div className={`${(content === "playlist") ? "playlist-content" : "hide"}`}>
-                    <CardCarousel playlists={playlists}/>
-                </div> */}
+                <div className={`playlist-content ${stage3}`}>
+                    {/* {(playlists.length <= 0) ? <Loading/> : <Loading/>} */}
+                    {(playlists.length <= 0) ? <Loading/> : <CardCarousel playlists={playlists}/>}
+                </div>
             </div>
         </div>
         <Footer />

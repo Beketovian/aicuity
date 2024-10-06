@@ -1,6 +1,6 @@
 import { PlaylistData, VideoData } from "../types";
 import "../styles/cardCarousel.css";
-import { FaGlasses } from "react-icons/fa";
+import { FaGlasses, FaPlay } from "react-icons/fa";
 
 interface CardCarouselProps {
     playlists: PlaylistData[];
@@ -8,10 +8,12 @@ interface CardCarouselProps {
 
 export default function CardCarousel({playlists}: CardCarouselProps) {
     return (
-        <div className="carousel-container">
-            {playlists.map((playlist: PlaylistData) => {
+        <div className="w-full max-h-[90%] mt-[65px] loading-animation flex flex-col gap-y-8 overflow-y-auto">
+            {playlists.map((playlist: PlaylistData, index) => {
                 return (
                     <PlaylistCard
+                        key={index}
+                        topic={playlist.topic}
                         videos={playlist.videos}
                     />
                 )
@@ -20,14 +22,20 @@ export default function CardCarousel({playlists}: CardCarouselProps) {
     )
 }
 
-function PlaylistCard({videos}: {videos:VideoData[]}) {
+function PlaylistCard({topic, videos}: PlaylistData) {
     return (
-        <div className="playlist-card-container">
-            <h1 className="playlist-topic-title">topic title</h1>
-            <div className="videos-container">
-                {videos.map((video) => {
+        <div className="w-full">
+            <h1 className="text-2xl font-bold border-b-4 border-solid border-gray-300 mb-2">{topic}</h1>
+            <div className="w-full flex flex-col gap-y-4">
+                <div className="w-full grid grid-cols-playlist px-4 bg-gray-200 text-gray-600 font-bold rounded-lg py-2 text-sm">
+                    <p>Video Title</p>
+                    <p>Watchability Score</p>
+                    <p className="justify-self-center">Play Video</p>
+                </div>
+                {videos.map((video, index) => {
                     return (
                         <VideoCard
+                            key={index}
                             video={video}
                         />
                     )
@@ -39,13 +47,15 @@ function PlaylistCard({videos}: {videos:VideoData[]}) {
 
 function VideoCard({video}: {video: VideoData}) {
     return (
-        <div className="video-card-container">
-            <img className="video-card-img" src="/placeholder.jpg" alt="video thumbnail"/>
-            <h2 className="video-card-title">video title</h2>
-            <div className="video-card-rating">
+        <div className="w-full grid grid-cols-playlist px-4">
+            <h2 className="text-base font-normal">{video.title}</h2>
+            <div className="flex items-center gap-x-2 text-base font-bold">
+                <p>{video.rating} / 10</p>
                 <FaGlasses />
-                <p className="video-card-score">80%</p>
             </div>
+            <a href={video.link} className="text-base justify-self-center">
+                <FaPlay/>
+            </a>
         </div>
     )
 }
