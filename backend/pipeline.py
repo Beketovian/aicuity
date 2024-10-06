@@ -2,7 +2,7 @@ import text_sim
 import yt_transcript
 import yt_vid_list
 
-query = "Prime Number Theorem"
+query = "How to find the inverse of a mod"
 vids = yt_vid_list.get_top_videos(query)
 
 texts_list = []
@@ -17,4 +17,5 @@ scores = text_sim.do_text_sim(query, texts_list)
 
 max_score = max(scores)
 max_idx = scores.index(max_score)
+
 print("Similarity Score:", max_score, "https://www.youtube.com/watch?v=" + vids[max_idx])
