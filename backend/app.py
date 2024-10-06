@@ -4,6 +4,7 @@ from mic_quality_analyzer import analyze_static
 from yt_transcript import get_yt_transcript
 from text_sim import do_text_sim
 from matching_algo import perform_matching
+import random
 
 app = Flask(__name__)
 
@@ -26,8 +27,9 @@ def search_and_analyze_videos():
         scores, relevant_times = do_text_sim(search_query, transcripts)
 
         # list with (id, text score, static score)
-        print(static_detection_results)
-        ids_and_scores = [(top_videos[i], scores[i], static_detection_results[top_videos[i]]) for i in range(len(top_videos))]
+        #print(static_detection_results)
+        #print(relevant_times)
+        ids_and_scores = [(top_videos[i], scores[i], static_detection_results[top_videos[i]], relevant_times[i]) for i in range(len(top_videos))]
 
         rankings = perform_matching(ids_and_scores)
 
