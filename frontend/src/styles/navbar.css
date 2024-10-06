@@ -1,0 +1,17 @@
+.inactive, .active {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.inactive {
+    text-decoration: none;
+}
+
+.active {
+    text-decoration: underline;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 4px;
+}
