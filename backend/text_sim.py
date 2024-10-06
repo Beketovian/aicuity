@@ -15,7 +15,6 @@ common_words = {"the":"","in":"","that":"","can":"","of":"","this":"","can":"","
 "is":"","a":"","to":"","of":"","and":"", "how":"", "do":""}
 
 def do_text_sim(query, input_dict):
-    print("shashank")
     global tokenizer_model
 
     if tokenizer_model is None:
