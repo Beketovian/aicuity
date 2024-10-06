@@ -81,21 +81,18 @@ def classify_static(file_path, threshold_db=60):
 
 def analyze_single_file(file_path):
     """
-    Analyze a single WAV file for static noise and return the result. We run this process parallel with others in the below function
+    Analyze a single WAV file for static noise and return 0 or 1. 0 = no static, 1 = static detected.
     """
     try:
         has_static, rms_value = classify_static(file_path)
-        return file_path, {
-            'status': 'Static detected' if has_static else 'No static detected',
-            'rms_value': rms_value
-        }
+        return file_path, 1 if has_static else 0
     except Exception as e:
         print(f"Error processing file {file_path}: {e}")
-        return file_path, {'status': 'Error', 'rms_value': None}
+        return file_path, None  # Return None in case of error
 
 def analyze_audio_files_in_parallel(directory):
     """
-    Analyze all WAV files in the specified directory for static noise in parallel. This shit goated AF like it brings down the total analysis time SIGNIFICANTLY
+    Analyze all WAV files in the specified directory for static noise in parallel.
     """
     wav_files = [os.path.join(directory, f) for f in os.listdir(directory) if f.endswith('.wav')]
     results = {}
@@ -146,5 +143,15 @@ if __name__ == "__main__":
 
     audio_results = analyze_audio_files_in_parallel(output_dir)
     
-    for file_name, result in audio_results.items():
-        print(f'{file_name}: {result["status"]} (RMS Value: {result["rms_value"]:.5f})')
+    # map audio results to video IDS. 0 if no static, 1 if static 
+    static_detection_results = {}
+    
+    for video_id in video_ids:
+        file_name = get_video_title(f"https://www.youtube.com/watch?v={video_id}")
+        sanitized_title = "".join([c if c.isalnum() or c in " -_" else "_" for c in file_name])
+        wav_file_name = f"{sanitized_title}.wav"
+
+        if wav_file_name in audio_results:
+            static_detection_results[video_id] = audio_results[wav_file_name]
+    
+    print(static_detection_results)
