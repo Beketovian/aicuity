@@ -34,7 +34,7 @@ export default function App() {
         e.preventDefault()
         transitionStage2();
         // get all topics
-        const topics = e.target[0].value.split(",");
+        const topics = e.target[0].value;
         const body = {
             query: topics
         }
