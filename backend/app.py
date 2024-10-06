@@ -20,10 +20,13 @@ def search_and_analyze_videos():
         top_videos = get_top_videos(search_query)
 
         static_detection_results = analyze_static(top_videos)
-        transcripts = get_yt_transcript(top_videos)
+        transcripts = []
+        for id in top_videos:
+            transcripts.append(get_yt_transcript(id))
         scores, relevant_times = do_text_sim(search_query, transcripts)
 
         # list with (id, text score, static score)
+        print(static_detection_results)
         ids_and_scores = [(top_videos[i], scores[i], static_detection_results[top_videos[i]]) for i in range(len(top_videos))]
 
         rankings = perform_matching(ids_and_scores)
